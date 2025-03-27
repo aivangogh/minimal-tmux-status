@@ -19,8 +19,8 @@ default_color="#[bg=default,fg=default,bold]"
 # Variables
 bg=$(get_tmux_option "@minimal-tmux-bg" '#698DDA')
 fg=$(get_tmux_option "@minimal-tmux-fg" '#000000')
-active_fg=$(get_tmux_option "@minimal-tmux-active-fg" "$fg")  # Foreground color for active window
-active_bg=$(get_tmux_option "@minimal-tmux-active-bg" "$active_fg")  # New option for active window background
+active_fg=$(get_tmux_option "@minimal-tmux-active-fg" "$fg")  # Not used for the label
+active_bg=$(get_tmux_option "@minimal-tmux-active-bg" "$active_fg")  # Background for active window
 
 use_arrow=$(get_tmux_option "@minimal-tmux-use-arrow" false)
 larrow="$("$use_arrow" && get_tmux_option "@minimal-tmux-left-arrow" "")"
@@ -55,9 +55,9 @@ tmux set-option -g status-justify "$justify"
 tmux set-option -g status-left "$status_left_extra"
 tmux set-option -g status-right "$status_right_extra"
 
-# Inactive windows: Use the fg color, default background
+# Inactive windows: Use fg color for both index and label, default background
 tmux set-option -g window-status-format "#[fg=${fg},bg=default]${window_status_format}"
 "$show_expanded_icon_for_all_tabs" && tmux set-option -g window-status-format "#[fg=${fg},bg=default] ${window_status_format}#{?window_zoomed_flag,${expanded_icon},}"
 
-# Active window: Use active_fg for foreground, active_bg for background, no arrows
-tmux set-option -g window-status-current-format "#[fg=black,bg=${active_bg}]${window_status_format}#{?window_zoomed_flag,${expanded_icon},}#[fg=${fg},bg=default]"
+# Active window: Use active_bg for background, primary (active_bg) for index, fg for label
+tmux set-option -g window-status-current-format "#[bg=${active_bg}]#[fg=${active_bg}]#I#[fg=${fg}]: #W #[fg=${fg},bg=default]#{?window_zoomed_flag,${expanded_icon},}"
