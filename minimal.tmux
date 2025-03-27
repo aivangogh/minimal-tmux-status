@@ -19,7 +19,7 @@ default_color="#[bg=default,fg=default,bold]"
 # Variables
 bg=$(get_tmux_option "@minimal-tmux-bg" '#698DDA')
 fg=$(get_tmux_option "@minimal-tmux-fg" '#000000')
-active_fg=$(get_tmux_option "@minimal-tmux-active-fg" "$fg")  # New option for active window color
+active_fg=$(get_tmux_option "@minimal-tmux-active-fg" "$fg")  # Ensure this is set correctly
 
 use_arrow=$(get_tmux_option "@minimal-tmux-use-arrow" false)
 larrow="$("$use_arrow" && get_tmux_option "@minimal-tmux-left-arrow" "")"
